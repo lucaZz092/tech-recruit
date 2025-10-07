@@ -1,4 +1,4 @@
-/* src/App.css */
+/* src/App.css (Versão Limpa) */
 
 /* --- CONFIGURAÇÕES GLOBAIS E FONTES --- */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
@@ -20,7 +20,6 @@
 
 html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
 }
 
 body {
@@ -28,39 +27,17 @@ body {
     background-color: var(--fundo-principal);
     color: var(--texto-principal);
     line-height: 1.6;
-    overflow-x: hidden;
-}
-
-/* Esconder barras de scroll horizontais globalmente */
-* {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
-}
-
-*::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
-}
-
-/* Eliminar TODOS os marcadores de lista globalmente */
-ul, ol, li {
-    list-style: none !important;
-    list-style-type: none !important;
-}
-
-ul::before, ol::before, li::before {
-    display: none !important;
-    content: none !important;
-}
-
-ul::marker, ol::marker, li::marker {
-    display: none !important;
-    content: none !important;
 }
 
 .container {
     max-width: 1100px;
     margin: 0 auto;
     padding: 0 20px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* --- CABEÇALHO E NAVEGAÇÃO --- */
@@ -73,20 +50,14 @@ header {
     z-index: 100;
 }
 
-/* Linha de energia movida para baixo para melhor posicionamento */
 header::after {
   content: '';
   position: absolute;
-  bottom: 0; /* Ajustado para ficar na borda */
+  bottom: 0;
   left: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--cor-destaque),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, var(--cor-destaque), transparent);
   background-size: 50% 100%;
   animation: move-energy 6s linear infinite;
 }
@@ -102,7 +73,6 @@ nav {
     font-weight: 700;
     color: var(--texto-titulo);
     text-decoration: none;
-    cursor: pointer;
 }
 
 .logo span {
@@ -152,41 +122,26 @@ nav a:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  position: relative;
   background: linear-gradient(135deg, #00873d, var(--cor-destaque));
   color: var(--texto-destaque);
   font-size: 16px;
   font-weight: 600;
   border-radius: 10px;
   padding: 15px 30px;
-  min-width: 180px;
-  height: 60px;
   border: none;
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
   box-shadow: 0 10px 20px rgba(61, 220, 132, 0.3);
   transition: all 0.3s ease;
-  letter-spacing: 0.5px;
 }
 
 .button-vagas:hover, .cta-button:hover {
   transform: translateY(-3px);
   box-shadow: 0 15px 25px rgba(61, 220, 132, 0.4);
-  background: linear-gradient(135deg, #00a847, #4de896);
 }
 
-.button-vagas:active, .cta-button:active {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 15px rgba(61, 220, 132, 0.3);
-}
-
-.button-vagas:focus, .cta-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(61, 220, 132, 0.3);
-}
-
-/* --- SEÇÃO DE VAGAS --- */
+/* --- SEÇÃO DE VAGAS (JOB CARD)--- */
 .featured-jobs {
     padding: 80px 0;
 }
@@ -240,340 +195,22 @@ nav a:hover {
     margin-right: 8px;
     margin-bottom: 8px;
 }
-/* --------------- ESTILOS PARA PÁGINAS DE CONTEÚDO (SOBRE NÓS, EMPRESAS) --------------- */
-.content-page-container {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 20px 40px;
-    background-color: var(--fundo-secundario);
-    border-radius: 12px;
-    animation: fadeIn 0.5s ease-in-out;
-}
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.content-page-container h1 {
-    font-size: 2.8rem;
-    color: var(--texto-titulo);
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.content-page-container .subtitulo {
-    font-size: 1.2rem;
-    text-align: center;
-    color: #aaa;
-    max-width: 700px;
-    margin: 0 auto 40px auto;
-}
-
-.content-page-container h2 {
-    font-size: 2rem;
-    color: var(--texto-titulo);
-    border-left: 4px solid var(--cor-destaque);
-    padding-left: 15px;
-    margin-top: 50px;
-    margin-bottom: 25px;
-}
-
-.content-page-container p,
-.content-page-container li {
-    font-size: 1rem;
-    line-height: 1.7;
-    color: var(--texto-principal);
-    margin-bottom: 15px;
-}
-
-.content-page-container ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.content-page-container li::before {
-    content: '✓';
-    color: var(--cor-destaque);
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-.content-page-container .cta-button {
-  display: block;
-  width: fit-content;
-  margin: 40px auto 20px auto;
-}
-/* --- ESTILOS ADICIONAIS PARA A PÁGINA 'PARA EMPRESAS' --- */
-
-.para-empresas-page {
+/* --- SEÇÃO TECH STACK / LOGO LOOP --- */
+.tech-stack-section {
     padding: 60px 0;
-    animation: fadeIn 0.5s ease-in-out;
+    border-top: 1px solid var(--fundo-secundario);
+    border-bottom: 1px solid var(--fundo-secundario);
 }
 
-/* Seção de Introdução com Imagem */
-.intro-section {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-    margin-bottom: 100px;
-}
-
-.intro-text {
-    flex: 1;
-}
-
-.intro-text h1 {
-    font-size: 3rem;
-    color: var(--texto-titulo);
-    margin-bottom: 20px;
-    line-height: 1.2;
-}
-
-.intro-text p {
-    font-size: 1.1rem;
+.section-subtitle {
+    text-align: center;
     color: #aaa;
+    font-weight: 500;
     margin-bottom: 30px;
-}
-
-.intro-image {
-    flex: 1;
-    max-width: 500px;
-}
-
-.intro-image img {
-    width: 100%;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-/* Seção de Benefícios com Cards */
-.benefits-section h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    color: var(--texto-titulo);
-    margin-bottom: 50px;
-    cursor: pointer;
-}
-
-.benefits-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
-}
-
-.benefit-card {
-    background-color: var(--fundo-secundario);
-    padding: 30px;
-    border-radius: 10px;
-    text-align: center;
-    border: 1px solid transparent;
-    transition: transform 0.3s ease, border-color 0.3s ease;
-    cursor: pointer;
-}
-
-.benefit-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--cor-destaque);
-}
-
-.benefit-icon {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-}
-
-.benefit-card h3 {
-    font-size: 1.4rem;
-    color: var(--texto-titulo);
-    margin-bottom: 10px;
-}
-
-.benefit-card p {
-    color: #aaa;
-    font-size: 0.95rem;
-}
-/* --- ESTILOS ADICIONAIS PARA A PÁGINA 'SOBRE NÓS' --- */
-
-.sobre-nos-page {
-    padding: 60px 0;
-    animation: fadeIn 0.5s ease-in-out;
-}
-
-/* A classe .intro-section e suas variações já foram criadas 
-   para a página 'Para Empresas' e serão reutilizadas aqui.
-   A única diferença é a ordem da imagem e texto em telas maiores.
-*/
-
-.sobre-nos-page .intro-section {
-    /* Invertemos a ordem para variar o layout */
-    flex-direction: row-reverse; 
-}
-
-/* Seção de Valores (reaproveitando o estilo da seção de benefícios) */
-.values-section h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    color: var(--texto-titulo);
-    margin-top: 100px;
-    margin-bottom: 50px;
-}
-
-/* Ajustes de Responsividade para a página Sobre Nós */
-@media (max-width: 900px) {
-    .sobre-nos-page .intro-section {
-        /* No mobile, a imagem volta para baixo */
-        flex-direction: column-reverse;
-    }
-}
-
-/* Ajustes de Responsividade para a nova página */
-@media (max-width: 900px) {
-    .intro-section {
-        flex-direction: column-reverse;
-        text-align: center;
-    }
-
-    .intro-text h1 {
-        font-size: 2.5rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .benefits-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .para-empresas-page {
-        padding: 40px 0;
-    }
-}
-
-/*-------------------------   Tela de Login   --------------------------------*/
-
-/* Fundo escuro que cobre toda a tela */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(5px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease-out;
-}
-
-/* Conteúdo principal do modal */
-.modal-content {
-  background-color: var(--fundo-secundario);
-  padding: 30px 40px;
-  border-radius: 12px;
-  width: 100%;
-  max-width: 400px;
-  position: relative;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  border: 1px solid #2a2a2a;
-}
-
-.modal-content h2 {
-  color: var(--texto-titulo);
-  text-align: center;
-  margin-bottom: 10px;
-  font-size: 1.8rem;
-}
-
-.modal-subtitle {
-  color: #aaa;
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-/* Botão de fechar (X) */
-.modal-close-button {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: none;
-  border: none;
-  color: #888;
-  font-size: 1.8rem;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.modal-close-button:hover {
-  color: var(--texto-principal);
-}
-
-/* Estilos do formulário */
-.modal-content .form-group {
-  margin-bottom: 20px;
-}
-
-.modal-content label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
-  color: var(--texto-principal);
-}
-
-.modal-content input {
-  width: 100%;
-  padding: 12px;
-  background-color: var(--fundo-principal);
-  border: 1px solid #333;
-  border-radius: 6px;
-  color: var(--texto-principal);
-  font-size: 1rem;
-}
-
-.modal-content input:focus {
-  outline: none;
-  border-color: var(--cor-destaque);
-}
-
-.forgot-password {
-  display: block;
-  text-align: right;
-  font-size: 0.9rem;
-  color: #aaa;
-  text-decoration: none;
-  margin-top: -10px;
-  margin-bottom: 25px;
-}
-
-.login-button {
-  width: 100%;
-  /* Reutilizando o estilo do botão principal */
-  background: linear-gradient(135deg, #00873d, var(--cor-destaque));
-  color: var(--texto-destaque);
-  font-weight: 600;
-  border-radius: 10px;
-  padding: 15px;
-  border: none;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.login-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 15px rgba(61, 220, 132, 0.3);
-}
-
-.signup-link {
-  text-align: center;
-  margin-top: 25px;
-  color: #aaa;
-}
-
-.signup-link a {
-  color: var(--cor-destaque);
-  font-weight: 500;
-  text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 0.9rem;
 }
 
 /* --- RODAPÉ --- */
@@ -584,200 +221,28 @@ footer {
     border-top: 1px solid var(--fundo-secundario);
 }
 
-/* --- SEÇÃO TECH STACK / LOGO LOOP --- */
-
-.tech-stack-section {
-  padding: 60px 0;
-  border-top: 1px solid var(--fundo-secundario);
-  border-bottom: 1px solid var(--fundo-secundario);
-  overflow: hidden !important;
-  width: 100vw;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-.logo-loop-container {
-  width: 100%;
-  overflow: hidden;
-}
-
-/* Esconder barras de scroll em todos os navegadores */
-.logoloop,
-.logo-loop-container,
-.tech-stack-section {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-}
-
-.logoloop::-webkit-scrollbar,
-.logo-loop-container::-webkit-scrollbar,
-.tech-stack-section::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
-}
-
-/* Remover todas as bolinhas/marcadores dos logos */
-.logoloop ul,
-.logoloop li,
-.logo-loop-container ul,
-.logo-loop-container li {
-  list-style: none !important;
-  list-style-type: none !important;
-  list-style-position: outside !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-.logoloop ul::before,
-.logoloop li::before,
-.logo-loop-container ul::before,
-.logo-loop-container li::before {
-  display: none !important;
-  content: none !important;
-}
-
-.logoloop ul::marker,
-.logoloop li::marker,
-.logo-loop-container ul::marker,
-.logo-loop-container li::marker {
-  display: none !important;
-  content: none !important;
-}
-
-.section-subtitle {
-  text-align: center;
-  color: #aaa;
-  font-weight: 500;
-  margin-bottom: 30px;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  font-size: 0.9rem;
-}
-
-.logo-loop-container .logoloop__node {
-  color: #aaa; /* Cor base mais clara para os ícones */
-  font-size: 45px;
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-.logo-loop-container .logoloop__node::before,
-.logo-loop-container .logoloop__node::after {
-  display: none !important;
-  content: none !important;
-}
-
-.logo-loop-container .logoloop__item:hover .logoloop__node {
-  color: var(--cor-destaque); /* Verde destaque no hover */
-  transform: scale(1.15);
-}
-
-.logo-loop-container .logoloop__item:hover .logoloop__node {
-  color: var(--texto-principal);
-}
-
-/* Estilos para SVGs customizados */
-.logo-loop-container .logoloop__node svg,
-.logo-loop-container .logoloop__item img {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-  filter: grayscale(30%) brightness(0.9) opacity(0.9);
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  padding: 8px;
-  transition: all 0.3s ease;
-}
-
-.logo-loop-container .logoloop__item:hover .logoloop__node svg,
-.logo-loop-container .logoloop__item:hover img {
-  filter: grayscale(0%) brightness(1.2) opacity(1);
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
-  transform: scale(1.2);
-}
-
-/* Forçar espaçamento nos itens do LogoLoop */
-.logo-loop-container .logoloop__item {
-  margin-right: 80px !important;
-  min-width: 40px;
-}
-
-.logo-loop-container .logoloop__item:not(:last-child) {
-  margin-right: 80px !important;
-}
-
-.logo-loop-container .logoloop__node {
-  color: #888; /* Define uma cor base para os ícones */
-  transition: color 0.3s ease;
-}
-
-.logo-loop-container .logoloop__item:hover .logoloop__node {
-  color: var(--texto-principal); /* Deixa os ícones mais claros ao passar o mouse */
-}
-
-/* --- ANIMAÇÃO LINHA HEADER (KEYFRAMES) --- */
+/* --- ANIMAÇÕES --- */
 @keyframes move-energy {
-  0% {
-    background-position: -150% 0;
-  }
-  100% {
-    background-position: 150% 0;
-  }
+  0% { background-position: -150% 0; }
+  100% { background-position: 150% 0; }
 }
 
-/* --- RESPONSIVIDADE PARA DISPOSITIVOS MÓVEIS --- */
+.text-type__cursor {
+  margin-left: 0.25rem;
+}
+
+/* --- RESPONSIVIDADE GLOBAL --- */
 @media (max-width: 768px) {
   nav {
     flex-direction: column;
     gap: 15px;
   }
-
-  nav ul {
-    gap: 20px;
-    padding-bottom: 10px;
-  }
-
-  .hero {
-    padding: 80px 0;
-  }
-
+  
   .hero h1 {
     font-size: 2.5rem;
-  }
-
-  .hero p {
-    font-size: 1rem;
   }
 
   .job-list {
     grid-template-columns: 1fr;
   }
-
-  .content-page-container {
-    padding: 20px;
-    margin: 20px auto;
-  }
-
-  .content-page-container h1 {
-    font-size: 2.2rem;
-  }
-
-  .content-page-container h2 {
-    font-size: 1.6rem;
-  }
-}
-/*Animação H1*/
-.text-type {
-  display: inline-block;
-  white-space: pre-wrap;
-}
-
-.text-type__cursor {
-  margin-left: 0.25rem;
-  display: inline-block;
-  opacity: 1;
-}
-
-.text-type__cursor--hidden {
-  display: none;
 }

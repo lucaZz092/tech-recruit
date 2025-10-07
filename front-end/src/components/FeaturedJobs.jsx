@@ -3,22 +3,31 @@
 import React, { useState, useEffect } from 'react';
 import JobCard from './JobCard';
 
-function FeaturedJobs({ onJobCardClick }) { // <- Recebemos a função do App.js
+function FeaturedJobs({ onJobCardClick }) {
   const [jobs, setJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchJobsFromOurProxy = async () => {
+    // Voltamos a chamar a API diretamente, mas agora a da Jobicy
+    const fetchJobs = async () => {
       try {
-        const response = await fetch('/api/fetchJobs');
+        const apiUrl = 'https://jobicy.com/api/v2/remote-jobs?count=6&tag=react';
+        
+        const response = await fetch(apiUrl);
+
+        if (!response.ok) {
+          throw new Error('A resposta da rede não foi OK.');
+        }
+        
         const data = await response.json();
 
-        if (response.status !== 200 || !data.jobs) {
-          throw new Error(data.error || 'Não foi possível carregar as vagas.');
+        if (!data.jobs) {
+            throw new Error('A API não retornou os dados de vagas esperados.');
         }
 
         setJobs(data.jobs);
+
       } catch (err) {
         setError(err.message);
       } finally {
@@ -26,8 +35,8 @@ function FeaturedJobs({ onJobCardClick }) { // <- Recebemos a função do App.js
       }
     };
 
-    fetchJobsFromOurProxy();
-  }, []);
+    fetchJobs();
+  }, []); // O array vazio [] garante que isto só executa uma vez
 
   const renderContent = () => {
     if (isLoading) return <p style={{ textAlign: 'center' }}>A carregar vagas...</p>;
@@ -39,13 +48,10 @@ function FeaturedJobs({ onJobCardClick }) { // <- Recebemos a função do App.js
         {jobs.map(job => (
           <JobCard
             key={job.id}
-            // Mapeamento dos dados da API para as props do JobCard
             title={job.jobTitle}
             company={job.companyName}
-            tags={job.jobTags} // <- Passando as stacks/tags
-            
-            // Passando a função de clique para o JobCard
-            onCardClick={onJobCardClick} 
+            tags={job.jobTags || []}
+            onCardClick={onJobCardClick}
           />
         ))}
       </div>

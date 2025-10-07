@@ -1,4 +1,5 @@
 import React from 'react';
+import './ParaEmpresas.css';
 // Continuaremos usando o App.css, então não precisamos de um CSS separado
 // import '../ContentPage.css'; // Pode remover esta linha se usava antes
 

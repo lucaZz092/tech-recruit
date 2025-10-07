@@ -1,23 +1,28 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-// 1. Importando o CSS e os componentes
 import './App.css'; 
+
+// --- Componentes Reutilizáveis ---
 import Header from './components/Header';
 import Hero from './components/Hero';
 import FeaturedJobs from './components/FeaturedJobs';
-import ParaEmpresas from './components/ParaEmpresas'; // Assumindo que você moveu para a pasta pages
-import SobreNos from './components/SobreNos';       // Assumindo que você moveu para a pasta pages
 import Footer from './components/Footer';
-import LoginModal from './components/loginModal';
+import LoginModal from './components/LoginModal/LoginModal';
 import TechStack from './components/TechStack';
 
+// --- Páginas ---
+import ParaEmpresas from './components/pages/ParaEmpresas/ParaEmpresas';
+import SobreNos from './components/pages/SobreNos/SobreNos';
+import Dashboard from './components/pages/Dashboard/Dashboard';
 
 // Componente para a Página Inicial
-function HomePage({ onJobCardClick }) {
+function HomePage({ onJobCardClick }) { // <- Recebe a prop aqui
   return (
     <>
       <Hero />
       <TechStack />
+      {/* E passa a prop para o FeaturedJobs aqui */}
       <FeaturedJobs onJobCardClick={onJobCardClick} />
       <ParaEmpresas />
       <SobreNos />
@@ -26,25 +31,27 @@ function HomePage({ onJobCardClick }) {
 }
 
 function App() {
-  // 2. Estado para controlar a visibilidade do modal
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
-
-  // Funções para abrir e fechar o modal
   const openLoginModal = () => setLoginModalOpen(true);
   const closeLoginModal = () => setLoginModalOpen(false);
 
   return (
-    <div className="App">
-      <Header />
-      <main>
-        {/* Página inicial com todas as seções */}
-        <HomePage onJobCardClick={openLoginModal} />
-      </main>
-      <Footer />
-
-      {/* O Modal fica aqui fora para flutuar sobre qualquer página */}
-      <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
-    </div>
+    <Router>
+      <div className="App">
+        <Header />
+        <main>
+          <Routes>
+            {/* A função openLoginModal é passada para a HomePage aqui */}
+            <Route path="/" element={<HomePage onJobCardClick={openLoginModal} />} />
+            <Route path="/empresas" element={<ParaEmpresas />} />
+            <Route path="/sobre-nos" element={<SobreNos />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
+        </main>
+        <Footer />
+        <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
+      </div>
+    </Router>
   );
 }
 

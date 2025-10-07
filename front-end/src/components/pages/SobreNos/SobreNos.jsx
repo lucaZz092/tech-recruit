@@ -1,4 +1,5 @@
 import React from 'react';
+import './SobreNos.css';
 // O CSS será adicionado ao App.css, então não precisamos de um import separado aqui
 
 function SobreNos() {

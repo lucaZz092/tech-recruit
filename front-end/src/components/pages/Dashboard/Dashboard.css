@@ -1,0 +1,137 @@
+/* src/pages/Dashboard/Dashboard.css */
+
+.dashboard-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.dashboard-header {
+    margin-bottom: 40px;
+}
+
+.dashboard-header h1 {
+    font-size: 2.5rem;
+    color: var(--texto-titulo);
+}
+
+.dashboard-header p {
+    font-size: 1.1rem;
+    color: #aaa;
+}
+
+/* Barra de Pesquisa */
+.search-bar-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.search-input-wrapper {
+    flex-grow: 1;
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+.search-bar-container input {
+    width: 100%;
+    height: 50px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background-color: var(--fundo-secundario);
+    color: var(--texto-principal);
+    font-size: 1rem;
+    padding-left: 45px;
+}
+
+.search-button {
+    height: 50px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--cor-destaque);
+    color: var(--texto-destaque);
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 0 30px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+/* Layout Principal */
+.dashboard-main {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+}
+
+.main-content h2 {
+    font-size: 1.8rem;
+    color: var(--texto-titulo);
+    margin-bottom: 20px;
+}
+
+/* Barra Lateral (Sidebar) e Widgets */
+.sidebar .widget-card {
+    background-color: var(--fundo-secundario);
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+.widget-card h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+    color: var(--texto-titulo);
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.application-status li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.icon-success { color: var(--cor-destaque); }
+.icon-pending { color: #f0b90b; }
+.icon-attention { color: #f6465d; }
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #333;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+.progress {
+    height: 100%;
+    background-color: var(--cor-destaque);
+    border-radius: 4px;
+}
+
+.sidebar-link {
+    color: var(--cor-destaque);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+    .dashboard-main {
+        grid-template-columns: 1fr;
+    }
+}
