@@ -556,6 +556,83 @@ footer {
     border-top: 1px solid var(--fundo-secundario);
 }
 
+/* --- SEÇÃO TECH STACK / LOGO LOOP --- */
+
+.tech-stack-section {
+  padding: 40px 0;
+  border-top: 1px solid var(--fundo-secundario);
+  border-bottom: 1px solid var(--fundo-secundario);
+}
+
+.section-subtitle {
+  text-align: center;
+  color: #aaa;
+  font-weight: 500;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 0.9rem;
+}
+
+.logo-loop-container .logoloop__node {
+  color: #888; /* Define uma cor base para os ícones */
+  transition: color 0.3s ease;
+}
+
+.logo-loop-container .logoloop__item:hover .logoloop__node {
+  color: var(--texto-principal); /* Deixa os ícones mais claros ao passar o mouse */
+}
+
+/* Estilos específicos para o LogoLoop no TechStack */
+.logo-loop-container .logoloop__node {
+  color: #888;
+  transition: color 0.3s ease;
+}
+
+.logo-loop-container .logoloop__item:hover .logoloop__node {
+  color: var(--texto-principal);
+}
+
+/* Estilos para SVGs customizados */
+.logo-loop-container .logoloop__node svg,
+.logo-loop-container .logoloop__item img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  filter: grayscale(30%) brightness(0.9) opacity(0.9);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 8px;
+  transition: all 0.3s ease;
+}
+
+.logo-loop-container .logoloop__item:hover .logoloop__node svg,
+.logo-loop-container .logoloop__item:hover img {
+  filter: grayscale(0%) brightness(1.2) opacity(1);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+  transform: scale(1.2);
+}
+
+/* Forçar espaçamento nos itens do LogoLoop */
+.logo-loop-container .logoloop__item {
+  margin-right: 80px !important;
+  min-width: 40px;
+}
+
+.logo-loop-container .logoloop__item:not(:last-child) {
+  margin-right: 80px !important;
+}
+
+.logo-loop-container .logoloop__node {
+  color: #888; /* Define uma cor base para os ícones */
+  transition: color 0.3s ease;
+}
+
+.logo-loop-container .logoloop__item:hover .logoloop__node {
+  color: var(--texto-principal); /* Deixa os ícones mais claros ao passar o mouse */
+}
+
 /* --- ANIMAÇÃO LINHA HEADER (KEYFRAMES) --- */
 @keyframes move-energy {
   0% {

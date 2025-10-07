@@ -9,12 +9,15 @@ import ParaEmpresas from './components/ParaEmpresas'; // Assumindo que você mov
 import SobreNos from './components/SobreNos';       // Assumindo que você moveu para a pasta pages
 import Footer from './components/Footer';
 import LoginModal from './components/loginModal';
+import TechStack from './components/TechStack';
+
 
 // Componente para a Página Inicial
 function HomePage({ onJobCardClick }) {
   return (
     <>
       <Hero />
+      <TechStack />
       <FeaturedJobs onJobCardClick={onJobCardClick} />
       <ParaEmpresas />
       <SobreNos />
