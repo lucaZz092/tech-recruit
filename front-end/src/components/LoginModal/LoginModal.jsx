@@ -1,6 +1,10 @@
 import React from 'react';
+import './LoginModal.css';
+import { useNavigate } from 'react-router-dom';
 
 function LoginModal({ isOpen, onClose }) {
+  const navigate = useNavigate();
+  
   // Se o modal não estiver aberto, não renderize nada.
   if (!isOpen) {
     return null;
@@ -9,6 +13,13 @@ function LoginModal({ isOpen, onClose }) {
   // Função para evitar que o clique dentro do modal o feche.
   const handleModalContentClick = (e) => {
     e.stopPropagation();
+  };
+
+  // Função para lidar com o login
+  const handleLogin = (e) => {
+    e.preventDefault(); // Previne o comportamento padrão do form
+    onClose(); // Fecha o modal
+    navigate('/dashboard'); // Navega para o dashboard
   };
 
   return (
@@ -24,7 +35,7 @@ function LoginModal({ isOpen, onClose }) {
         <h2>Olá! Seja Bem-Vindo(a)!</h2>
         <p className="modal-subtitle">Faça login para continuar</p>
 
-        <form>
+        <form onSubmit={handleLogin}>
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required />

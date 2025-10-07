@@ -18,7 +18,7 @@ function TechStack() {
   return (
     <section className="tech-stack-section">
       <div className="container">
-        <p className="section-subtitle">Focado nas Tecnologias mais Desejadas</p>
+        <p className="section-subtitle">Focado nas Tecnologias e Empresas mais Desejadas</p>
         <div className="logo-loop-container">
           <LogoLoop 
             logos={techLogos} 

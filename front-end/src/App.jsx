@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 import './App.css'; 
 
-// --- Componentes Reutilizáveis ---
+// --- Componentes ---
 import Header from './components/Header';
 import Hero from './components/Hero';
 import FeaturedJobs from './components/FeaturedJobs';
@@ -17,12 +16,11 @@ import SobreNos from './components/pages/SobreNos/SobreNos';
 import Dashboard from './components/pages/Dashboard/Dashboard';
 
 // Componente para a Página Inicial
-function HomePage({ onJobCardClick }) { // <- Recebe a prop aqui
+function HomePage({ onJobCardClick }) {
   return (
     <>
       <Hero />
       <TechStack />
-      {/* E passa a prop para o FeaturedJobs aqui */}
       <FeaturedJobs onJobCardClick={onJobCardClick} />
       <ParaEmpresas />
       <SobreNos />
@@ -38,10 +36,11 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Header />
+        {/* A MUDANÇA ESTÁ AQUI: Passamos a função para o Header */}
+        <Header onLoginClick={openLoginModal} />
+        
         <main>
           <Routes>
-            {/* A função openLoginModal é passada para a HomePage aqui */}
             <Route path="/" element={<HomePage onJobCardClick={openLoginModal} />} />
             <Route path="/empresas" element={<ParaEmpresas />} />
             <Route path="/sobre-nos" element={<SobreNos />} />

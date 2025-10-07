@@ -102,6 +102,22 @@ nav a:hover {
     padding: 120px 0;
 }
 
+.login-btn {
+    background-color: transparent;
+    border: 2px solid var(--cor-destaque);
+    color: var(--cor-destaque);
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: var(--cor-destaque);
+    color: var(--texto-destaque);
+}
 .hero h1 {
     font-size: 3.5rem;
     color: var(--texto-titulo);
