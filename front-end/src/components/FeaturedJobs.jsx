@@ -1,63 +1,62 @@
 // src/components/FeaturedJobs.jsx
-import React from 'react';
+
+import React, { useState, useEffect } from 'react';
 import JobCard from './JobCard';
 
-// Dados de exemplo (simulando uma chamada de API)
-const jobsData = [
-  {
-    id: 1,
-    title: 'Engenheiro(a) de Software Sênior (Backend)',
-    company: 'InovaTech Solutions - Remoto (Brasil)',
-    tags: ['Node.js', 'TypeScript', 'AWS', 'GraphQL']
-  },
-  {
-    id: 2,
-    title: 'Desenvolvedor(a) Frontend Pleno (React)',
-    company: 'CodeLeap Inc. - Híbrido (São Paulo, SP)',
-    tags: ['React', 'Next.js', 'Styled-Components']
-  },
-  {
-    id: 3,
-    title: 'Site Reliability Engineer (SRE)',
-    company: 'CyberData Corp - Remoto (Global)',
-    tags: ['Kubernetes', 'Terraform', 'CI/CD', 'Python']
-  },
-  {
-    id: 4,
-    title: 'Site Reliability Engineer (SRE)',
-    company: 'CyberData Corp - Remoto (Global)',
-    tags: ['Kubernetes', 'Terraform', 'CI/CD', 'Python']
-  },
-  {
-    id: 5,
-    title: 'Site Reliability Engineer (SRE)',
-    company: 'CyberData Corp - Remoto (Global)',
-    tags: ['Kubernetes', 'Terraform', 'CI/CD', 'Python']
-  },
-  {
-    id: 6,
-    title: 'Site Reliability Engineer (SRE)',
-    company: 'CyberData Corp - Remoto (Global)',
-    tags: ['Kubernetes', 'Terraform', 'CI/CD', 'Python']
-  }
-];
+function FeaturedJobs({ onJobCardClick }) { // <- Recebemos a função do App.js
+  const [jobs, setJobs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-function FeaturedJobs({ onJobCardClick }) {
+  useEffect(() => {
+    const fetchJobsFromOurProxy = async () => {
+      try {
+        const response = await fetch('/api/fetchJobs');
+        const data = await response.json();
+
+        if (response.status !== 200 || !data.jobs) {
+          throw new Error(data.error || 'Não foi possível carregar as vagas.');
+        }
+
+        setJobs(data.jobs);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchJobsFromOurProxy();
+  }, []);
+
+  const renderContent = () => {
+    if (isLoading) return <p style={{ textAlign: 'center' }}>A carregar vagas...</p>;
+    if (error) return <p style={{ textAlign: 'center', color: '#ff6b6b' }}>Erro: {error}</p>;
+    if (jobs.length === 0) return <p style={{ textAlign: 'center' }}>Nenhuma vaga encontrada no momento.</p>;
+
+    return (
+      <div className="job-list">
+        {jobs.map(job => (
+          <JobCard
+            key={job.id}
+            // Mapeamento dos dados da API para as props do JobCard
+            title={job.jobTitle}
+            company={job.companyName}
+            tags={job.jobTags} // <- Passando as stacks/tags
+            
+            // Passando a função de clique para o JobCard
+            onCardClick={onJobCardClick} 
+          />
+        ))}
+      </div>
+    );
+  };
+
   return (
     <section id="vagas" className="featured-jobs">
       <div className="container">
         <h2 className="section-title">Vagas em Destaque</h2>
-        <div className="job-list">
-          {jobsData.map(job => (
-            <JobCard
-              key={job.id}
-              title={job.title}
-              company={job.company}
-              tags={job.tags}
-              onClick={onJobCardClick}
-            />
-          ))}
-        </div>
+        {renderContent()}
       </div>
     </section>
   );

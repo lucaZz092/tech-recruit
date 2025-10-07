@@ -22,11 +22,11 @@ function TechStack() {
         <div className="logo-loop-container">
           <LogoLoop 
             logos={techLogos} 
-            speed={100}
+            speed={80}
             fadeOut={true}
-            fadeOutColor="#121212" // A cor de fundo do seu site
-            logoHeight={40}
-            gap={50}
+            fadeOutColor="#121212"
+            logoHeight={45}
+            gap={70}
           />
         </div>
       </div>

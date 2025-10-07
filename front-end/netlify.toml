@@ -1,0 +1,16 @@
+# netlify.toml
+
+# Configurações de build do seu site
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Onde as suas funções serverless estão guardadas
+[functions]
+  directory = "netlify/functions"
+
+# Regra para redirecionar as chamadas /api para as suas funções
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200

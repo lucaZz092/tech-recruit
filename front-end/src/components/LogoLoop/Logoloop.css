@@ -1,9 +1,12 @@
 .logoloop {
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden !important;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 
-  --logoloop-gap: 32px;
-  --logoloop-logoHeight: 28px;
+  --logoloop-gap: 70px;
+  --logoloop-logoHeight: 45px;
   --logoloop-fadeColorAuto: #ffffff;
 }
 
@@ -25,14 +28,16 @@
   width: max-content;
   will-change: transform;
   user-select: none;
+  overflow: hidden;
 }
 
 .logoloop__list {
   display: flex;
   align-items: center;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  list-style: none !important;
+  list-style-type: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .logoloop__item {
@@ -40,6 +45,15 @@
   margin-right: var(--logoloop-gap);
   font-size: var(--logoloop-logoHeight);
   line-height: 1;
+  list-style: none !important;
+  list-style-type: none !important;
+  position: relative;
+}
+
+.logoloop__item::before,
+.logoloop__item::after {
+  display: none !important;
+  content: none !important;
 }
 
 .logoloop__item:last-child {

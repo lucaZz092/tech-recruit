@@ -20,6 +20,7 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 body {
@@ -27,6 +28,33 @@ body {
     background-color: var(--fundo-principal);
     color: var(--texto-principal);
     line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Esconder barras de scroll horizontais globalmente */
+* {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+*::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
+
+/* Eliminar TODOS os marcadores de lista globalmente */
+ul, ol, li {
+    list-style: none !important;
+    list-style-type: none !important;
+}
+
+ul::before, ol::before, li::before {
+    display: none !important;
+    content: none !important;
+}
+
+ul::marker, ol::marker, li::marker {
+    display: none !important;
+    content: none !important;
 }
 
 .container {
@@ -559,9 +587,60 @@ footer {
 /* --- SEÇÃO TECH STACK / LOGO LOOP --- */
 
 .tech-stack-section {
-  padding: 40px 0;
+  padding: 60px 0;
   border-top: 1px solid var(--fundo-secundario);
   border-bottom: 1px solid var(--fundo-secundario);
+  overflow: hidden !important;
+  width: 100vw;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.logo-loop-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Esconder barras de scroll em todos os navegadores */
+.logoloop,
+.logo-loop-container,
+.tech-stack-section {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.logoloop::-webkit-scrollbar,
+.logo-loop-container::-webkit-scrollbar,
+.tech-stack-section::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+/* Remover todas as bolinhas/marcadores dos logos */
+.logoloop ul,
+.logoloop li,
+.logo-loop-container ul,
+.logo-loop-container li {
+  list-style: none !important;
+  list-style-type: none !important;
+  list-style-position: outside !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.logoloop ul::before,
+.logoloop li::before,
+.logo-loop-container ul::before,
+.logo-loop-container li::before {
+  display: none !important;
+  content: none !important;
+}
+
+.logoloop ul::marker,
+.logoloop li::marker,
+.logo-loop-container ul::marker,
+.logo-loop-container li::marker {
+  display: none !important;
+  content: none !important;
 }
 
 .section-subtitle {
@@ -575,18 +654,21 @@ footer {
 }
 
 .logo-loop-container .logoloop__node {
-  color: #888; /* Define uma cor base para os ícones */
-  transition: color 0.3s ease;
+  color: #aaa; /* Cor base mais clara para os ícones */
+  font-size: 45px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.logo-loop-container .logoloop__node::before,
+.logo-loop-container .logoloop__node::after {
+  display: none !important;
+  content: none !important;
 }
 
 .logo-loop-container .logoloop__item:hover .logoloop__node {
-  color: var(--texto-principal); /* Deixa os ícones mais claros ao passar o mouse */
-}
-
-/* Estilos específicos para o LogoLoop no TechStack */
-.logo-loop-container .logoloop__node {
-  color: #888;
-  transition: color 0.3s ease;
+  color: var(--cor-destaque); /* Verde destaque no hover */
+  transform: scale(1.15);
 }
 
 .logo-loop-container .logoloop__item:hover .logoloop__node {
