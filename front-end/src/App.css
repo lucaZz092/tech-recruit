@@ -47,7 +47,7 @@ header {
     top: 0;
     background-color: rgba(18, 18, 18, 0.8);
     backdrop-filter: blur(10px);
-    z-index: 100;
+    z-index: 1000;
 }
 
 header::after {
@@ -60,12 +60,15 @@ header::after {
   background: linear-gradient(90deg, transparent, var(--cor-destaque), transparent);
   background-size: 50% 100%;
   animation: move-energy 6s linear infinite;
+  z-index: 1001;
 }
 
 nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    position: relative;
+    z-index: 1002;
 }
 
 .logo {
@@ -96,6 +99,12 @@ nav a:hover {
     color: var(--cor-destaque);
 }
 
+/* --- MAIN CONTENT OFFSET --- */
+main {
+    padding-top: 80px;
+    margin-top: -80px;
+}
+
 /* --- SEÇÃO PRINCIPAL (HERO) --- */
 .hero {
     text-align: center;
@@ -112,6 +121,8 @@ nav a:hover {
     font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
+    position: absolute;
+    right: 0;
 }
 
 .login-btn:hover {

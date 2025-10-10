@@ -9,34 +9,79 @@ function FeaturedJobs({ onJobCardClick }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Voltamos a chamar a API diretamente, mas agora a da Jobicy
+    // Dados de fallback caso a API falhe
+    const fallbackJobs = [
+      { id: 1, jobTitle: "Desenvolvedor React Sênior", companyName: "TechCorp", jobTags: ["React", "TypeScript", "Node.js"] },
+      { id: 2, jobTitle: "Full Stack Developer", companyName: "StartupXYZ", jobTags: ["JavaScript", "Python", "AWS"] },
+      { id: 3, jobTitle: "Frontend Engineer", companyName: "InnovaTech", jobTags: ["Vue.js", "React", "CSS"] }
+    ];
+
     const fetchJobs = async () => {
       try {
-        const apiUrl = 'https://jobicy.com/api/v2/remote-jobs?count=6&tag=react';
+        console.log('Buscando vagas da API Jobicy...');
+        
+        // ✨ CONFIGURAÇÕES PREDEFINIDAS PARA DIFERENTES PERFIS ✨
+        
+        // 🚀 Configuração atual - React/Frontend
+        const filters = {
+          count: 6,
+          tag: 'react',
+          geo: '',
+          industry: '',
+          level: ''
+        };
+        
+        // 💡 EXEMPLOS DE OUTRAS CONFIGURAÇÕES:
+        
+        // Para vagas de Python/Backend:
+        // const filters = { count: 6, tag: 'python', geo: 'usa', level: 'senior' };
+        
+        // Para vagas Júnior em JavaScript:
+        // const filters = { count: 8, tag: 'javascript', level: 'junior' };
+        
+        // Para vagas de DevOps remotas:
+        // const filters = { count: 5, tag: 'docker', geo: 'remote' };
+        
+        // Para vagas em startups (múltiplas tecnologias):
+        // const filters = { count: 10, industry: 'software-engineering' };
+        
+        // Construindo URL com filtros
+        const params = new URLSearchParams();
+        if (filters.count) params.append('count', filters.count);
+        if (filters.tag) params.append('tag', filters.tag);
+        if (filters.geo) params.append('geo', filters.geo);
+        if (filters.industry) params.append('industry', filters.industry);
+        if (filters.level) params.append('level', filters.level);
+        
+        const apiUrl = `https://jobicy.com/api/v2/remote-jobs?${params.toString()}`;
         
         const response = await fetch(apiUrl);
 
         if (!response.ok) {
-          throw new Error('A resposta da rede não foi OK.');
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
         
         const data = await response.json();
+        console.log('Dados recebidos da API:', data);
 
-        if (!data.jobs) {
-            throw new Error('A API não retornou os dados de vagas esperados.');
+        if (!data.jobs || data.jobs.length === 0) {
+          throw new Error('Nenhuma vaga encontrada na API');
         }
 
         setJobs(data.jobs);
 
       } catch (err) {
-        setError(err.message);
+        console.error('Erro ao buscar vagas da API:', err);
+        console.log('Usando dados de fallback...');
+        setJobs(fallbackJobs);
+        setError(`API indisponível - Exibindo vagas exemplo (${err.message})`);
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchJobs();
-  }, []); // O array vazio [] garante que isto só executa uma vez
+  }, []);
 
   const renderContent = () => {
     if (isLoading) return <p style={{ textAlign: 'center' }}>A carregar vagas...</p>;
