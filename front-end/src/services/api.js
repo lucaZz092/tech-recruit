@@ -1,5 +1,7 @@
+import config from '../config.js';
+
 // Configuração da API
-const API_BASE_URL = 'http://localhost:5001/api';
+const API_BASE_URL = `${config.API_URL}/api`;
 
 // Classe para gerenciar requisições à API
 class ApiService {
@@ -88,9 +90,9 @@ class ApiService {
 
   // ========== AUTHENTICATION ==========
   
-  // Login
+  // Login (usando endpoint demo)
   async login(credentials) {
-    const response = await this.post('/auth/login', credentials);
+    const response = await this.post('/demo/auth/login', credentials);
     
     if (response.success && response.token) {
       localStorage.setItem('token', response.token);
@@ -100,9 +102,9 @@ class ApiService {
     return response;
   }
 
-  // Registro
+  // Registro (usando endpoint demo)
   async register(userData) {
-    const response = await this.post('/auth/register', userData);
+    const response = await this.post('/demo/auth/register', userData);
     
     if (response.success && response.token) {
       localStorage.setItem('token', response.token);

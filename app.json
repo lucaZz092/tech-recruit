@@ -1,0 +1,47 @@
+{
+  "name": "tech-recruit-backend",
+  "description": "Tech Recruit Job Platform - Backend API",
+  "keywords": ["node", "express", "jobs", "api"],
+  "website": "https://github.com/lucaZz092/tech-recruit",
+  "repository": "https://github.com/lucaZz092/tech-recruit",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "success_url": "/api/health",
+  "scripts": {
+    "postdeploy": "echo 'Deploy completed successfully'"
+  },
+  "env": {
+    "NODE_ENV": {
+      "description": "Node environment",
+      "value": "production"
+    },
+    "JWT_SECRET": {
+      "description": "Secret key for JWT tokens",
+      "generator": "secret"
+    },
+    "JWT_EXPIRES_IN": {
+      "description": "JWT token expiration time",
+      "value": "7d"
+    },
+    "ALLOWED_ORIGINS": {
+      "description": "Allowed CORS origins (comma-separated)",
+      "value": "https://your-frontend-domain.com"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "addons": [
+    {
+      "plan": "mongodb-atlas:sandbox",
+      "as": "MONGODB"
+    }
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}

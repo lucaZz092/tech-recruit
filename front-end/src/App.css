@@ -99,6 +99,51 @@ nav a:hover {
     color: var(--cor-destaque);
 }
 
+/* User Menu Styles */
+.nav-actions {
+    display: flex;
+    align-items: center;
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.welcome-text {
+    color: var(--texto-principal);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.dashboard-btn, .logout-btn {
+    background: none;
+    border: 1px solid var(--cor-destaque);
+    color: var(--cor-destaque);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dashboard-btn:hover {
+    background: var(--cor-destaque);
+    color: var(--texto-destaque);
+}
+
+.logout-btn {
+    border-color: #ff6b6b;
+    color: #ff6b6b;
+}
+
+.logout-btn:hover {
+    background: #ff6b6b;
+    color: white;
+}
+
 /* --- MAIN CONTENT OFFSET --- */
 main {
     padding-top: 80px;

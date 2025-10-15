@@ -230,4 +230,114 @@ router.get('/jobs/:id', async (req, res) => {
   }
 });
 
+// @route   POST /api/demo/auth/login
+// @desc    Login de demonstração
+// @access  Public
+router.post('/auth/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Usuários de demonstração
+    const demoUsers = [
+      {
+        id: 1,
+        name: 'João Developer',
+        email: 'demo@teste.com',
+        password: '123456',
+        role: 'user'
+      },
+      {
+        id: 2,
+        name: 'Maria Tech',
+        email: 'maria@teste.com',
+        password: '123456',
+        role: 'user'
+      },
+      {
+        id: 3,
+        name: 'TechCorp Admin',
+        email: 'admin@techcorp.com',
+        password: '123456',
+        role: 'company'
+      }
+    ];
+
+    const user = demoUsers.find(u => u.email === email && u.password === password);
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        error: 'Email ou senha incorretos'
+      });
+    }
+
+    // Token mock (em produção seria um JWT real)
+    const token = `demo_token_${user.id}_${Date.now()}`;
+
+    res.json({
+      success: true,
+      message: 'Login realizado com sucesso',
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      }
+    });
+  } catch (error) {
+    console.error('Erro no login demo:', error);
+    res.status(500).json({ 
+      error: 'Erro interno do servidor' 
+    });
+  }
+});
+
+// @route   POST /api/demo/auth/register
+// @desc    Registro de demonstração
+// @access  Public
+router.post('/auth/register', async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    if (!name || !email || !password) {
+      return res.status(400).json({
+        success: false,
+        error: 'Nome, email e senha são obrigatórios'
+      });
+    }
+
+    // Verificar se email já existe (simulado)
+    if (email === 'demo@teste.com') {
+      return res.status(400).json({
+        success: false,
+        error: 'Email já cadastrado'
+      });
+    }
+
+    // Criar usuário demo
+    const newUser = {
+      id: Math.floor(Math.random() * 10000),
+      name,
+      email,
+      role: 'user'
+    };
+
+    // Token mock
+    const token = `demo_token_${newUser.id}_${Date.now()}`;
+
+    res.status(201).json({
+      success: true,
+      message: 'Usuário criado com sucesso',
+      token,
+      user: newUser
+    });
+  } catch (error) {
+    console.error('Erro no registro demo:', error);
+    res.status(500).json({ 
+      error: 'Erro interno do servidor' 
+    });
+  }
+});
+
 module.exports = router;

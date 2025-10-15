@@ -3,6 +3,7 @@ import './Dashboard.css';
 import { FiSearch, FiBriefcase, FiUser, FiClock, FiCheckCircle, FiAlertCircle } from 'react-icons/fi';
 import JobCard from '../../JobCard';
 import JobDetailModal from '../../JobDetailModal/JobDetailModal';
+import { getJobs, getRandomJobs } from '../../../services/api';
 
 function Dashboard() {
   // Estados para os filtros
@@ -64,52 +65,74 @@ function Dashboard() {
       const hasFilters = selectedTech || selectedLocation || selectedLevel || searchTerm;
 
       if (!hasFilters) {
-        // Nenhum filtro aplicado - buscar vagas aleatórias de diferentes tecnologias
+        // Nenhum filtro aplicado - buscar vagas aleatórias da API
         console.log('🎲 Nenhum filtro aplicado - buscando vagas aleatórias...');
-        await fetchRandomTechJobs();
+        const response = await getRandomJobs(25);
+        
+        if (response.success) {
+          const formattedJobs = response.data.map(job => ({
+            id: job.id,
+            jobTitle: job.jobTitle,
+            companyName: job.companyName,
+            jobTags: job.jobTags || ['Remote'],
+            // Dados completos para o modal
+            url: job.url,
+            companyLogo: job.companyLogo,
+            jobGeo: job.jobGeo,
+            jobType: job.jobType,
+            jobLevel: job.jobLevel,
+            jobIndustry: job.jobIndustry,
+            jobExcerpt: job.jobExcerpt,
+            jobDescription: job.jobDescription,
+            salary: job.salary,
+            isRemote: job.isRemote,
+            source: job.source
+          }));
+
+          setJobs(formattedJobs);
+          console.log(`✅ ${formattedJobs.length} vagas aleatórias carregadas da API`);
+        }
         return;
       }
 
-      // Construindo parâmetros da API para busca filtrada
-      const params = new URLSearchParams();
-      params.append('count', '10');
+      // Construindo parâmetros para a API local
+      const filters = {
+        limit: 10,
+        page: 1
+      };
       
-      // Aplicar filtro de tecnologia se selecionado
+      if (searchTerm) {
+        filters.search = searchTerm;
+      }
+      
       if (selectedTech) {
-        params.append('tag', selectedTech);
-      } else if (searchTerm) {
-        // Se não há tech específica, mas há termo de busca, usar como tag
-        params.append('tag', searchTerm.toLowerCase());
+        filters.technology = selectedTech;
       }
       
-      // Aplicar filtro de localização se selecionado
-      if (selectedLocation && selectedLocation !== 'remote') {
-        params.append('geo', selectedLocation);
+      if (selectedLocation) {
+        filters.location = selectedLocation;
       }
       
-      // Aplicar filtro de nível se selecionado
       if (selectedLevel) {
-        params.append('level', selectedLevel);
+        filters.level = selectedLevel;
       }
 
-      const apiUrl = `https://jobicy.com/api/v2/remote-jobs?${params.toString()}`;
-      console.log('🌐 URL da API:', apiUrl);
+      console.log('🌐 Filtros da API:', filters);
 
-      const response = await fetch(apiUrl);
+      const response = await getJobs(filters);
       
-      if (!response.ok) {
-        throw new Error(`Erro HTTP ${response.status}: ${response.statusText}`);
+      if (!response.success) {
+        throw new Error(response.error || 'Erro ao buscar vagas');
       }
       
-      const data = await response.json();
-      console.log('📊 Dados recebidos:', data);
+      console.log('📊 Dados recebidos:', response);
       
-      if (!data.jobs || data.jobs.length === 0) {
+      if (!response.data || response.data.length === 0) {
         throw new Error('Nenhuma vaga encontrada com os filtros selecionados');
       }
 
       // Formatar dados mantendo todas as informações para o modal
-      const formattedJobs = data.jobs.map(job => ({
+      const formattedJobs = response.data.map(job => ({
         id: job.id,
         jobTitle: job.jobTitle,
         companyName: job.companyName,
@@ -155,111 +178,7 @@ function Dashboard() {
     }, 100);
   };
 
-  // Função para buscar vagas aleatórias de diferentes tecnologias
-  const fetchRandomTechJobs = async () => {
-    try {
-      console.log('🎯 Buscando vagas de múltiplas tecnologias...');
-      
-      // Lista de tecnologias populares para buscar
-      const techList = [
-        'javascript', 'python', 'react', 'node', 'java', 
-        'typescript', 'vue', 'angular', 'php', 'ruby',
-        'golang', 'docker', 'kubernetes', 'aws', 'azure'
-      ];
-
-      // Embaralhar array para variedade
-      const shuffledTechs = [...techList].sort(() => Math.random() - 0.5);
-      
-      // Buscar vagas de 5-6 tecnologias diferentes
-      const techsToSearch = shuffledTechs.slice(0, 6);
-      const allJobs = [];
-
-      console.log('🔄 Buscando vagas para tecnologias:', techsToSearch);
-
-      // Buscar vagas para cada tecnologia
-      for (const tech of techsToSearch) {
-        try {
-          const params = new URLSearchParams();
-          params.append('count', '5'); // 5 vagas por tecnologia
-          params.append('tag', tech);
-
-          const apiUrl = `https://jobicy.com/api/v2/remote-jobs?${params.toString()}`;
-          console.log(`📡 Buscando ${tech}:`, apiUrl);
-
-          const response = await fetch(apiUrl);
-          
-          if (response.ok) {
-            const data = await response.json();
-            if (data.jobs && data.jobs.length > 0) {
-              // Adicionar indicador de tecnologia
-              const techJobs = data.jobs.map(job => ({
-                ...job,
-                sourceTech: tech // Para rastreamento
-              }));
-              allJobs.push(...techJobs);
-              console.log(`✅ ${tech}: ${data.jobs.length} vagas encontradas`);
-            }
-          }
-          
-          // Pequeno delay para não sobrecarregar a API
-          await new Promise(resolve => setTimeout(resolve, 200));
-          
-        } catch (techError) {
-          console.warn(`⚠️ Erro ao buscar ${tech}:`, techError.message);
-        }
-      }
-
-      if (allJobs.length === 0) {
-        throw new Error('Nenhuma vaga encontrada nas tecnologias pesquisadas');
-      }
-
-      // Embaralhar todas as vagas e pegar 25 aleatórias
-      const shuffledJobs = allJobs.sort(() => Math.random() - 0.5);
-      const selectedJobs = shuffledJobs.slice(0, 25);
-
-      console.log(`🎉 Total de ${selectedJobs.length} vagas aleatórias carregadas`);
-
-      // Formatar dados
-      const formattedJobs = selectedJobs.map(job => ({
-        id: job.id,
-        jobTitle: job.jobTitle,
-        companyName: job.companyName,
-        jobTags: job.jobTags || [job.sourceTech, job.jobLevel, job.jobGeo].filter(Boolean) || ['Remote'],
-        // Dados completos para o modal
-        url: job.url,
-        companyLogo: job.companyLogo,
-        jobGeo: job.jobGeo,
-        jobType: job.jobType,
-        jobLevel: job.jobLevel,
-        jobIndustry: job.jobIndustry,
-        jobExcerpt: job.jobExcerpt,
-        jobDescription: job.jobDescription,
-        pubDate: job.pubDate,
-        sourceTech: job.sourceTech
-      }));
-
-      setJobs(formattedJobs);
-
-    } catch (error) {
-      console.error('❌ Erro ao buscar vagas aleatórias:', error);
-      console.log('🔄 Usando dados de fallback...');
-      
-      // Expandir fallback com mais variedade
-      const expandedFallback = [
-        { id: 101, jobTitle: "Senior React Developer", companyName: "TechCorp", jobTags: ["React", "TypeScript", "Remote"] },
-        { id: 102, jobTitle: "Python Backend Engineer", companyName: "DataFlow", jobTags: ["Python", "Django", "AWS"] },
-        { id: 103, jobTitle: "Full Stack JavaScript Developer", companyName: "WebStart", jobTags: ["Node.js", "React", "MongoDB"] },
-        { id: 104, jobTitle: "DevOps Engineer", companyName: "CloudPioneers", jobTags: ["Docker", "Kubernetes", "AWS"] },
-        { id: 105, jobTitle: "Vue.js Frontend Developer", companyName: "ModernWeb", jobTags: ["Vue.js", "Nuxt", "CSS"] },
-        { id: 106, jobTitle: "Java Spring Developer", companyName: "Enterprise Solutions", jobTags: ["Java", "Spring Boot", "MySQL"] },
-        { id: 107, jobTitle: "Mobile React Native Developer", companyName: "MobileFirst", jobTags: ["React Native", "iOS", "Android"] },
-        { id: 108, jobTitle: "Go Backend Developer", companyName: "HighPerf Systems", jobTags: ["Golang", "Microservices", "Docker"] }
-      ];
-      
-      setJobs(expandedFallback);
-      setError('Usando vagas exemplo de múltiplas tecnologias');
-    }
-  };
+  // Função removida - agora usamos a API local
 
   // Carregar vagas iniciais ao montar o componente
   useEffect(() => {
