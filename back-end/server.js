@@ -8,6 +8,11 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Configure trust proxy for production (Render, Heroku, etc)
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+}
+
 // Middleware de segurança
 app.use(helmet());
 
@@ -15,7 +20,8 @@ app.use(helmet());
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
   max: 100, // máximo 100 requests por IP
-  message: { error: 'Muitas tentativas. Tente novamente em 15 minutos.' }
+  message: { error: 'Muitas tentativas. Tente novamente em 15 minutos.' },
+  trustProxy: process.env.NODE_ENV === 'production'
 });
 app.use('/api/', limiter);
 

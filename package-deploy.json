@@ -1,0 +1,17 @@
+{
+  "name": "tech-recruit-production",
+  "version": "1.0.0",
+  "main": "back-end/server.js",
+  "engines": {
+    "node": "18.x"
+  },
+  "scripts": {
+    "start": "cd back-end && node server.js",
+    "build": "cd front-end && npm install && npm run build",
+    "postinstall": "cd back-end && npm install"
+  },
+  "keywords": ["jobs", "tech", "recruitment"],
+  "author": "Lucas",
+  "license": "MIT",
+  "description": "Tech Recruit Job Platform"
+}
