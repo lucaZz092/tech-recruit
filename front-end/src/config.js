@@ -3,7 +3,7 @@ const config = {
   // Determine API URL based on environment
   API_URL: import.meta.env.VITE_API_URL || 
            (import.meta.env.MODE === 'production' 
-             ? 'https://your-backend-domain.com' 
+             ? 'https://tech-recruit.onrender.com' 
              : 'http://localhost:5001'),
   
   // Other configuration
