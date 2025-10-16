@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
       
       if (response.success) {
         setUser(response.user);
-        setIsAuthenticated(true);
+        setIsLoggedIn(true);
         console.log('✅ Login realizado com sucesso!');
         return { success: true, user: response.user };
       } else {
@@ -69,6 +69,7 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setIsLoading(false);
     }
+  };
 
   // Função de registro
   const register = async (userData) => {
