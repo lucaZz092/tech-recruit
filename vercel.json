@@ -4,12 +4,12 @@
   "installCommand": "npm install --prefix front-end",
   "devCommand": "cd front-end && npm run dev",
   "env": {
-    "VITE_API_URL": "https://your-backend-domain.com"
+    "VITE_API_URL": "https://tech-recruit.onrender.com"
   },
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://your-backend-domain.com/api/$1"
+      "destination": "https://tech-recruit.onrender.com/api/$1"
     }
   ]
 }
