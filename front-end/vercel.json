@@ -1,4 +1,11 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist"
+  "env": {
+    "VITE_API_URL": "https://tech-recruit.onrender.com"
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
