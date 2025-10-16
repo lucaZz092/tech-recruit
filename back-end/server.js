@@ -27,15 +27,28 @@ app.use('/api/', limiter);
 
 // CORS configurado para o frontend
 app.use(cors({
-  origin: [
-    'http://localhost:5173', 
-    'http://localhost:5174', 
-    'http://localhost:5175', 
-    'http://localhost:5176',
-    'https://tech-recruit-1.vercel.app',
-    'https://tech-recruit.vercel.app',
-    'https://*.vercel.app'
-  ],
+  origin: function (origin, callback) {
+    // Permitir requisições sem origin (ex: mobile apps)
+    if (!origin) return callback(null, true);
+    
+    // Lista de origens permitidas
+    const allowedOrigins = [
+      'http://localhost:5173',
+      'http://localhost:5174', 
+      'http://localhost:5175', 
+      'http://localhost:5176',
+      'https://tech-recruit-1.vercel.app',
+      'https://tech-recruit.vercel.app'
+    ];
+    
+    // Verificar se a origem está na lista ou é um subdomínio do Vercel
+    if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+      callback(null, true);
+    } else {
+      console.log('CORS blocked origin:', origin);
+      callback(new Error('Não permitido pelo CORS'));
+    }
+  },
   credentials: true
 }));
 
