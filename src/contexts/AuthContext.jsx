@@ -40,18 +40,20 @@ export const AuthProvider = ({ children }) => {
     checkAuthStatus();
   }, []);
 
-  // Função de login
+    // Função de login
   const login = async (credentials) => {
     try {
       setIsLoading(true);
-      console.log('🔐 Tentando fazer login...');
+      console.log('🔐 Tentando fazer login...', credentials);
+      console.log('🔗 API URL:', import.meta.env.VITE_API_URL);
       
       const response = await apiLogin(credentials);
+      console.log('📥 Resposta da API:', response);
       
       if (response.success) {
         setUser(response.user);
-        setIsLoggedIn(true);
-        console.log('✅ Login realizado com sucesso:', response.user.name);
+        setIsAuthenticated(true);
+        console.log('✅ Login realizado com sucesso!');
         return { success: true, user: response.user };
       } else {
         console.error('❌ Erro no login:', response.error);
@@ -59,6 +61,7 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('❌ Erro de conexão no login:', error);
+      console.error('❌ Stack trace:', error.stack);
       return { 
         success: false, 
         error: 'Erro de conexão. Verifique se o servidor está rodando.' 
@@ -66,7 +69,6 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setIsLoading(false);
     }
-  };
 
   // Função de registro
   const register = async (userData) => {
