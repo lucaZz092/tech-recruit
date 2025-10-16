@@ -1,24 +1,12 @@
 {
-  "builds": [
+  "rewrites": [
     {
-      "src": "front-end/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "https://tech-recruit.onrender.com/api/$1"
+      "source": "/api/(.*)",
+      "destination": "https://tech-recruit.onrender.com/api/$1"
     },
     {
-      "src": "/(.*)",
-      "dest": "front-end/$1"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
-  ],
-  "env": {
-    "VITE_API_URL": "https://tech-recruit.onrender.com"
-  }
+  ]
 }

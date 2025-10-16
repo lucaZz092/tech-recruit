@@ -1,0 +1,107 @@
+/* src/pages/ParaEmpresas/ParaEmpresas.css */
+
+.para-empresas-page {
+    padding: 60px 0;
+}
+
+/* Seção de Introdução com Imagem */
+.intro-section {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 100px;
+}
+
+.intro-text {
+    flex: 1;
+}
+
+.intro-text h1 {
+    font-size: 3rem;
+    color: var(--texto-titulo);
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.intro-text p {
+    font-size: 1.1rem;
+    color: #aaa;
+    margin-bottom: 30px;
+}
+
+.intro-image {
+    flex: 1;
+    max-width: 500px;
+}
+
+.intro-image img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Seção de Benefícios com Cards */
+.benefits-section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--texto-titulo);
+    margin-bottom: 50px;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.benefit-card {
+    background-color: var(--fundo-secundario);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid transparent;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.benefit-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--cor-destaque);
+}
+
+.benefit-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.benefit-card h3 {
+    font-size: 1.4rem;
+    color: var(--texto-titulo);
+    margin-bottom: 10px;
+}
+
+.benefit-card p {
+    color: #aaa;
+    font-size: 0.95rem;
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+    .intro-section {
+        flex-direction: column-reverse;
+        text-align: center;
+    }
+
+    .intro-text h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .benefits-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .para-empresas-page {
+        padding: 40px 0;
+    }
+}
