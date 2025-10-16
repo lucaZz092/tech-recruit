@@ -27,7 +27,15 @@ app.use('/api/', limiter);
 
 // CORS configurado para o frontend
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175', 'http://localhost:5176'],
+  origin: [
+    'http://localhost:5173', 
+    'http://localhost:5174', 
+    'http://localhost:5175', 
+    'http://localhost:5176',
+    'https://tech-recruit-1.vercel.app',
+    'https://tech-recruit.vercel.app',
+    'https://*.vercel.app'
+  ],
   credentials: true
 }));
 
