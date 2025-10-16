@@ -1,15 +1,24 @@
 {
-  "buildCommand": "cd front-end && npm install && npm run build",
-  "outputDirectory": "front-end/dist",
-  "installCommand": "npm install --prefix front-end",
-  "devCommand": "cd front-end && npm run dev",
+  "builds": [
+    {
+      "src": "front-end/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "https://tech-recruit.onrender.com/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "front-end/$1"
+    }
+  ],
   "env": {
     "VITE_API_URL": "https://tech-recruit.onrender.com"
-  },
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "https://tech-recruit.onrender.com/api/$1"
-    }
-  ]
+  }
 }
