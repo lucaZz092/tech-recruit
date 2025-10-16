@@ -177,31 +177,24 @@ class ApiService {
 const apiService = new ApiService();
 
 // Exportar métodos específicos para facilitar importação
-export const {
-  // Jobs
-  getJobs,
-  getRandomJobs,
-  getJob,
-  
-  // Auth
-  login,
-  register,
-  logout,
-  getCurrentUser,
-  
-  // User
-  updateProfile,
-  getUserApplications,
-  getFavoriteJobs,
-  
-  // Job interactions
-  applyToJob,
-  toggleFavoriteJob,
-  
-  // Utils
-  isAuthenticated,
-  getStoredUser,
-  healthCheck
-} = apiService;
+export const getJobs = (...args) => apiService.getJobs(...args);
+export const getRandomJobs = (...args) => apiService.getRandomJobs(...args);
+export const getJob = (...args) => apiService.getJob(...args);
+
+export const login = (...args) => apiService.login(...args);
+export const register = (...args) => apiService.register(...args);
+export const logout = (...args) => apiService.logout(...args);
+export const getCurrentUser = (...args) => apiService.getCurrentUser(...args);
+
+export const updateProfile = (...args) => apiService.updateProfile(...args);
+export const getUserApplications = (...args) => apiService.getUserApplications(...args);
+export const getFavoriteJobs = (...args) => apiService.getFavoriteJobs(...args);
+
+export const applyToJob = (...args) => apiService.applyToJob(...args);
+export const toggleFavoriteJob = (...args) => apiService.toggleFavoriteJob(...args);
+
+export const isAuthenticated = (...args) => apiService.isAuthenticated(...args);
+export const getStoredUser = (...args) => apiService.getStoredUser(...args);
+export const healthCheck = (...args) => apiService.healthCheck(...args);
 
 export default apiService;
